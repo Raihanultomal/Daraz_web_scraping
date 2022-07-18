@@ -1,5 +1,5 @@
 Task Description:
-We have to collect data from website(star tach). Consider the following link for collecting data https://www.daraz.com.bd/smartphones/ . It’s may be not possible to fetch data from API. That’s why we have to collect data from html tag/ elements. At first we have to collect data from the list view page. We will collect data from each page. But for “Product description” we have to go to the page details. 
+We have to collect data from website(star tach). Consider the following link for collecting data Raihanul use this site instead, https://www.startech.com.bd/laptop-notebook/laptop . It’s may be not possible to fetch data from API. That’s why we have to collect data from html tag/ elements. At first we have to collect data from the list view page. We will collect data from each page. But for “Product description” we have to go to the page details. 
 Items:
 
 
