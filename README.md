@@ -4,13 +4,13 @@ Items:
 
 
 => parse these attributes from details page,
-=> Price
-=> Regular Price
-=> Status  
-=> Product Code
-=> Brand
-=> Key Features
-=> Description
+=> Price,
+=> Regular Price,
+=> Status,
+=> Product Code,
+=> Brand,
+=> Key Features,
+=> Description,
 
 
  Each item is represented as a column name of the dataset.
