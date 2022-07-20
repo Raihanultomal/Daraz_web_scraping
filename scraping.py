@@ -1,11 +1,9 @@
 import requests
-
 from bs4 import BeautifulSoup
-
 import pandas as pd
 
 
-def laptop(page):
+def passing_soup(page):
     url = f"https://www.startech.com.bd/laptop-notebook/laptop?page={page}"
     
     r = requests.get(url)
@@ -26,19 +24,66 @@ def extract(soup):
         title = details_soup.find('h1', class_ = "product-name").text
         # print(title)
 
-        price = details_soup.find('td', class_ = "product-info-data product-price").text.replace('৳', '')
+
+
+
+
+
+
+        # product_details = ["price","regular_price","status","product_code","product_brand","key_feature","description"]
+
+        # for item in len(product_details):
+        #     product_details[i] = 
+
+
+
+        # try:
+        #     price = details_soup.find('td', class_ = "product-info-data product-price").text.replace('৳', '')
+        #     regular_price = details_soup.find('td', class_ = "product-info-data product-regular-price").text.replace('৳', '')
+        #     status = details_soup.find('td', class_ = "product-info-data product-status").text
+        #     product_code = details_soup.find('td', class_ = "product-info-data product-code").text
+        #     product_brand = details_soup.find('td', class_ = "product-info-data product-brand").text
+        #     key_feature = details_soup.find('div', class_ = "short-description").ul.text.replace('View More Info','')
+        #     description = details_soup.find('div', class_ = "full-description").text
+        # except:
+        #     if price == Nun:
+                
+
+
+
+
+
+
+
+
+        try:
+            price = details_soup.find('td', class_ = "product-info-data product-price").text.replace('৳', '')
+        except:
+            price = ""
         # print(price)
 
-        regular_price = details_soup.find('td', class_ = "product-info-data product-regular-price").text.replace('৳', '')
+        try:
+            regular_price = details_soup.find('td', class_ = "product-info-data product-regular-price").text.replace('৳', '')
+        except:
+            regular_price = ""
         # print(regular_price)
 
-        status = details_soup.find('td', class_ = "product-info-data product-status").text
+        try:
+            status = details_soup.find('td', class_ = "product-info-data product-status").text
+        except:
+            status = ""
         # print(status)
 
-        product_code = details_soup.find('td', class_ = "product-info-data product-code").text
+        try:
+            product_code = details_soup.find('td', class_ = "product-info-data product-code").text
+        except:
+            product_code = ""
         # print(product_code)
 
-        product_brand = details_soup.find('td', class_ = "product-info-data product-brand").text
+        try:
+            product_brand = details_soup.find('td', class_ = "product-info-data product-brand").text
+        except:
+            product_brand = ""
         # print(product_brand)
 
         try:
@@ -53,8 +98,13 @@ def extract(soup):
         # print(key_feature)
         # print("\n")
 
-        description = details_soup.find('div', class_ = "full-description").text
+        try:
+            description = details_soup.find('div', class_ = "full-description").text
+        except:
+            description = ""
         # print(description)
+
+        
 
         product = {
             'Product Name' : title,
@@ -64,25 +114,49 @@ def extract(soup):
             'Product Code' : product_code,
             'Brand' : product_brand,
             'Key Feature' : key_feature,
+            'Description' : description,
         }
         product_list.append(product)
+
     return
-        
+
+
+def page(soup):
+    divs = soup.find_all('div', class_ = "p-item")
+    try:
+        page = soup.find('div', class_ = "col-md-6 rs-none text-right").p.text.split("(")[-1].replace(' Pages)','')
+    except:
+        page = ""
+    return page
+
 
 product_list = []
-# print(len(product_list))
 
-print("Enter the number of page")
-x = input()
-for i in range(1,int(x)):
-    print(f'Scraping page {i}.........!')
-    c = laptop(i)
-    extract(c)
+# Defining main function
+def main():
+    page_number = passing_soup(1)
+    page_number = int(page(page_number))
+
+    # product_list = []
+    # print(len(product_list))
 
 
-df = pd.DataFrame(product_list)
-df.to_csv('Product.csv')
+    print(f"The nnumber of total page is {page_number} ")
 
+    for i in range(1,page_number):
+        print(f'Scraping page {i}.........!')
+        soup_from_given_url = passing_soup(i)
+        extract(soup_from_given_url)
+
+
+    df = pd.DataFrame(product_list)
+    df.to_csv('Products.csv')
+  
+  
+# Using the special variable 
+# __name__
+if __name__=="__main__":
+    main()
 
 
 # p-item-img
